@@ -1,0 +1,11 @@
+Client (c.py)
+Connects to AS, then connects to EDU or COM.
+
+Authentication server (as.py)
+Listens on port 65000
+
+.com top-level DNS (com.py)
+Listens on port 65001
+
+.edu top-level DNS (edu.py)
+Listens on port 65002
