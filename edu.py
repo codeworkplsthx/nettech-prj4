@@ -13,7 +13,7 @@ PORT = 65002
 
 def main():
     # load shit from DNS table DNSCOM.txt
-    ts_table = Table("PROJ3-TLDS2.txt")
+    ts_table = Table("PROJ3-TLDS2.txt") if len(sys.argv) < 2 else Table(sys.argv[1])
     print("[S]: Server host name is: ", socket.gethostname())
     print("[S]: Server IP address is:  ", socket.gethostbyname('localhost'))
     print("[S]: Listening on: ", edu_port)

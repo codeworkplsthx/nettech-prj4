@@ -5,23 +5,31 @@ from table import Table
 from dnsentry import *
 import sys
 
-as_host = ''
+HOST = ''
+PORT = 65000
 
 
 
 def main():
-    com_hostname = socket.gethostbyname('localhost')
-    edu_hostname = socket.gethostbyname('localhost')
-    #as_table = Table(sys.argv[3])
+
+
+
+    com_hostname = socket.gethostbyname(sys.argv[1]) \
+        if len(sys.argv)> 1 \
+        else socket.gethostbyname('localhost')
+    edu_hostname = socket.gethostbyname(sys.argv[2]) \
+        if len(sys.argv) > 2 \
+        else socket.gethostbyname('localhost')
+
 
     print("[S]: Server host name is: ", socket.gethostname())
     print("[S]: Server IP address is  ", socket.gethostbyname('localhost'))
-    print("[S]: Listening on: ", as_port)
+    print("[S]: Listening on: ", PORT)
 
     # create portal for clients
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((as_host, as_port))
-        s.listen(as_port)
+        s.bind((HOST, PORT))
+        s.listen(PORT)
 
         while True:
             conn = None
@@ -61,22 +69,22 @@ def main():
                                 # if match, return hostname of COM
                                 if digest == com_digest:
                                     print("digest matches. informing client...")
-                                    conn.send(pack("com"))
+                               
+                                    conn.send(pack(str(com_hostname) + " " + str(com_port)))
                                 else:
                                     print("digest incorrect")
                                     # connect to EDU server
                                     print("Contacting edu server...")
                                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as edu:
                                         try:
-                                            edu.connect((com_hostname, edu_port))
+                                            edu.connect((edu_hostname, edu_port))
                                             print("Success")
                                             # send challenge string to EDU server
                                             edu.sendall(pack(chall))
                                             print("Sending " + chall + " to edu server...")
                                             # wait for response from EDU server
                                             edu_digest = unpack(edu.recv(packet_size))
-                                            print("Received " + com_digest + " from edu server")
-
+                                            print("Received " + edu_digest + " from edu server")
                                         except ConnectionRefusedError:
                                             edu.close()
                                             print("Can't connect to edu server")
@@ -86,7 +94,7 @@ def main():
 
                                     if digest == edu_digest:
                                         print("digest matches. informing client...")
-                                        conn.send(pack("edu"))
+                                        conn.send(pack(str(edu_hostname) + " " +str(edu_port)))
                                     else:
                                         print("digest incorrect")
 
