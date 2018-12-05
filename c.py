@@ -21,7 +21,6 @@ def clear_output_file():
         file.write("")
 
 
-# read PROJ3-HNS.txt
 
 def main():
 
