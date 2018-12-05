@@ -12,8 +12,6 @@ PORT = 65000
 
 def main():
 
-
-
     com_hostname = socket.gethostbyname(sys.argv[1]) \
         if len(sys.argv)> 1 \
         else socket.gethostbyname('localhost')

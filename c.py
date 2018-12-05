@@ -54,6 +54,8 @@ def main():
                         tlds_s.sendall(pack(host))
                         response = unpack(tlds_s.recv(packet_size))
                         with open("RESOLVED.txt", 'a') as file:
+                            if str(response) != "ERROR: HOST NOT FOUND":
+                                response = str(response)[1:-1]
                             file.write(str(response) + "\n")
                 except ConnectionRefusedError:
                         print("Error: Unable to contact TLDS server. Exiting...")

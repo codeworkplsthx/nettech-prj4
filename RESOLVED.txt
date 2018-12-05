@@ -1,2 +1,2 @@
-- - 0 -
-[mx.rutgers.edu 192.64.4.2 234873 A]
+ERROR: HOST NOT FOUND
+mx.rutgers.edu 192.64.4.2  A

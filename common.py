@@ -1,16 +1,21 @@
 
+
 import hmac
+
 def tuple2str(tp):
     return " ".join([str(item) for item in tp])
 
 
-def str2tuple(s):
+def str2tuple(s: str):
     lst = s.split(" ")
     return lst
 
 def make_digest(key,chall):
     return hmac.new(key.encode(), chall.encode("utf-8")).hexdigest()
 
+'''
+Convenience wrapper (assumption: all messages are utf-8 encoded)
+'''
 def pack(msg):
     return str.encode(msg,'utf-8')
 

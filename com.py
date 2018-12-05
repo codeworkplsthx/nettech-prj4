@@ -58,7 +58,7 @@ def main():
                                         with open("log.txt", 'w+') as file:
                                             file.write(data)
                                         print("[S]: Sending error message to client...")
-                                        msg = str("- - 0 -").encode('utf-8')
+                                        msg = str("ERROR: HOST NOT FOUND").encode('utf-8')
                                         conn.send(msg)
                                 else: #case: AS digest
                                     #make digest with challenge string
